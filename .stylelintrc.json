@@ -1,0 +1,14 @@
+{
+  "rules": {
+   "color-no-invalid-hex": true,
+    "font-family-no-missing-generic-family-keyword": true,
+    "block-no-empty": true,
+    "property-no-unknown": true,
+    "unit-no-unknown": true,
+    "selector-type-no-unknown": true,
+    "no-duplicate-selectors": true,
+    "declaration-block-no-duplicate-properties": true,
+    "string-no-newline": true,
+    "length-zero-no-unit": true
+  }
+}
