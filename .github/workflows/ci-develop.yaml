@@ -1,0 +1,30 @@
+name: wf-ci
+on:
+  pull_request:
+    branches:
+     - develop
+    types:
+     - opened
+     - synchronize
+jobs:
+  linting-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{github.ref}}
+      - name: Linting html files
+        run: npx htmlhint "**/*.html"
+      - name: Linting css files
+        run: npx stylelint "**/*.css"
+  build-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{github.ref}}
+      - name: Building the website using Parcel #for building the website
+        run: npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
+  
