@@ -2,25 +2,27 @@ name: wf-cd
 on:
   push:
     branches:
-      - production
+      - release/**
 jobs:
   build-upload-artifact:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{github.ref}}
       - name: Building the website using Parcel #for building the website
-        run: npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
+        run: npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./"
       - name: Upload Build Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
-          name: "build-artifact-production"
-  production-artifact-develop:
+          name: "build-artifact-release"
+  deploy-artifact-release:
     needs: "build-upload-artifact"
     runs-on: "ubuntu-latest"
     environment:
-      name: "production-env"
+      name: "staging-env"
     permissions:
       pages: write
       id-token: write
@@ -28,6 +30,5 @@ jobs:
       - name: Deploy Artifacts on Github pages
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: "build-artifact-production"
+          artifact_name: "build-artifact-release"
           token: ${{github.token}}
-
