@@ -15,8 +15,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
-          name: "build-artifact-develop"
-  deploy-artifact-develop:
+          name: "build-artifact-production"
+  production-artifact-develop:
     needs: "build-upload-artifact"
     runs-on: "ubuntu-latest"
     environment:
@@ -28,6 +28,6 @@ jobs:
       - name: Deploy Artifacts on Github pages
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: "build-artifact-develop"
+          artifact_name: "build-artifact-production"
           token: ${{github.token}}
 
